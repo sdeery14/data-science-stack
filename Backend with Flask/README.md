@@ -19,7 +19,7 @@ Before you begin, ensure you have the following installed:
 - [Poetry](https://python-poetry.org/docs/#installation) - For managing dependencies and virtual environments.
 - [Python](https://www.python.org/downloads/) - Ensure you have Python installed on your system.
 
-## Setting Up the Environment
+## Set Up the Environment
 1. **Install Poetry**:
 
 ```bash
@@ -179,7 +179,7 @@ To exit the `psql` shell, type:
 poetry add flask-sqlalchemy flask-migrate psycopg2-binary python-dotenv
 ```
 
-4. **Load Environment Variables and Set Up the Database**:
+4. **Create the Data Models**:
 
 Create a file named `models.py` in the `app` directory and add the following code:
 
@@ -228,4 +228,38 @@ poetry run flask db init
 poetry run flask db migrate -m "Initial migration."
 poetry run flask db upgrade
 ```
+## Verify Database Schema
 
+To verify that the database schema was created successfully, follow these steps:
+
+1. **Log into the PostgreSQL Docker Container**:
+
+Run the following command to access the PostgreSQL container:
+
+```bash
+docker exec -it flask_db_service psql -U flask_user -d flask_db
+```
+
+2. **Check the Schema**:
+
+Once you are inside the `psql` shell, list all tables to verify that the schema was created:
+
+```sql
+\dt
+```
+
+You should see a table named `data` in the list. To view the columns of the `data` table, use:
+
+```sql
+\d data
+```
+
+This will display the structure of the `data` table, including the columns `id`, `name`, and `value`.
+
+3. **Exit the `psql` Shell**:
+
+To exit the `psql` shell, type:
+
+```sql
+\q
+```
